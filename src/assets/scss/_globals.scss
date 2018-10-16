@@ -1,0 +1,77 @@
+@import "variables";
+
+.db  {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.pr {
+  position: relative;
+}
+
+.pabs {
+  position: absolute;
+}
+
+.df {
+  display: flex;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.db {
+  display: block;
+}
+
+.center {
+  align-items: center;
+}
+
+.just-center {
+  justify-content: center;
+}
+
+.just-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.just-start{
+  justify-content: flex-start;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.of-auto {
+  overflow: auto;
+}
+
+.ofy-auto {
+  overflow: auto;
+}

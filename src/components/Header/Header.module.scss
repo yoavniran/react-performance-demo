@@ -1,0 +1,37 @@
+.container {
+  padding: 0 16px;
+  box-sizing: border-box;
+  background: #353232;
+  min-height: 60px;
+  border-bottom: 1px rgba(0, 0, 0, 0.6) solid;
+}
+
+.counter {
+  font-size: 22px;
+  color: #353232;
+  font-weight: bold;
+  padding: 10px;
+  background: var(--active);
+  border-radius: 4px;
+}
+
+.title {
+  flex-grow: 2;
+}
+
+.powered {
+  margin-top: 12px;
+  margin-left: 6px;
+  font-size: 8px;
+}
+
+.logo {
+  margin-top: 12px;
+  margin-left: 2px;
+  width: 24px;
+  height: 24px;
+}
+
+.toggle{
+  margin-left: 12px;
+}
