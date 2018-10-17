@@ -1,0 +1,25 @@
+.container {
+  height: 50px;
+  flex-shrink: 0;
+  border-top: 1px var(--active) solid;
+  padding: 10px;
+}
+
+.button {
+  color: var(--text-gray);
+  margin-right: 6px;
+  font-size: 12px;
+
+  &:hover {
+    color: var(--active);
+    text-decoration: underline;
+  }
+}
+
+.enabled {
+  color: var(--active);
+}
+
+.perf {
+  margin-right: 20px;
+}

@@ -6,7 +6,7 @@ const getPhotos = (state) => state.photos;
 const selectPhotos = createSelector(
 	getPhotos,
 	(photos) => {
-		console.log("!!!!!!!!!!! recalculating photos !!!!!!!!");
+		// console.log("!!!!!!!!!!! recalculating photos !!!!!!!!");
 		return photos.map(takePhotoProps)
 	},
 );

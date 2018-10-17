@@ -13,4 +13,6 @@
 
 .section{
   max-height: calc(100% - 70px);
+  //transform: translateZ(0);
+  //will-change: transform;
 }

@@ -82,10 +82,6 @@ export default createReducer(initialState, {
 
 			if (~index) {
 
-				if (photos[index].price !== price.price){
-					console.log("!!!!!!!!!!! NEW PRICE !!!!!!!!!! ", index, price.price);
-				}
-
 				//todo !!!!!!!!!! only create new object for price change
 				newPhotos.push({
 					...photos[index],

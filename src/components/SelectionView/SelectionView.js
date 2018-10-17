@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import cx from "classnames";
 import {VIEW_STATES} from "../../consts";
 import Header from "../Header/Header";
@@ -13,13 +13,12 @@ const SelectionView = (props) => {
 
 	return (
 		<div className={cx(styles.container, {
-			[styles.minified]: !isExpanded,
-			"df flex-col": !isExpanded,
-			"h-100": isExpanded,
+			[`${[styles.minified]} df flex-col`]: !isExpanded,
+			"h-100 of-hidden": isExpanded,
 		})}>
 			<Header viewState={props.viewState}/>
 
-			<section className={cx(styles.section, "of-auto")}>
+			<section className={cx(styles.section, "of-auto h-100")}>
 				{isExpanded ? <PhotosGrid/> : <PhotosList/>}
 			</section>
 		</div>
@@ -29,6 +28,7 @@ const SelectionView = (props) => {
 const computeProps = (props) => ({
 	style: {
 		height: props.viewState === VIEW_STATES.EXPANDED ? "100%" : "auto",
+		overflow: "hidden",
 	}
 });
 

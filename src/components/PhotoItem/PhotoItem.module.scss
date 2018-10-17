@@ -26,10 +26,11 @@
 }
 
 .price {
-  top: 2px;
+  top: 6px;
   left: 2px;
   font-size: 14px;
-  margin-left: 6px;
+  margin-left: 10px;
+  z-index: 1;
 }
 
 .check {
@@ -63,7 +64,15 @@
   text-overflow: ellipsis;
 }
 
+.actions-bg{
+  top: 0;
+  width: 100%;
+  height: 30px;
+  background: rgba(53, 50, 50, 0.35);
+}
+
 .actions {
+  z-index: 1;
   top: 0;
   right: 0;
   margin: 5px 5px 5px 20px;

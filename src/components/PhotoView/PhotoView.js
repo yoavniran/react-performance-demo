@@ -9,7 +9,7 @@ import styles from "./PhotoView.module.scss";
 import RenderCounter from "../RenderCounter/RenderCounter";
 
 const PhotoView = (props) => (
-	<section className={cx(styles.container, "w-100 h-100", {
+	<section className={cx(styles.container, "w-100", {
 		"df center just-center": !props.photo,
 	})}>
 		{props.photo ?
@@ -26,4 +26,4 @@ export default connect(
 		photo: selectExposedPhoto(state),
 	}),
 	null,
-)(RenderCounter(PhotoView, () => ({style: {height: "100%"}})));
+)(RenderCounter(PhotoView, () => ({style: {flexGrow: 2, display: "flex"}})));

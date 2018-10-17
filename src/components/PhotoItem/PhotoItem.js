@@ -49,6 +49,8 @@ const PhotoItem = (props) => {
 			<Image className={cx(styles.image, {[styles["hor-image"]]: horizontal})}
 			       cloudName={CLOUD}
 			       publicId={id}
+			       quality="auto"
+			       fetchFormat="auto"
 			       height={horizontal ? "240" : "720"}
 			       width={horizontal ? "240" : "720"} crop="scale"/>
 
@@ -58,6 +60,8 @@ const PhotoItem = (props) => {
 				<span className={cx(styles.name, "dib")} title={filename}>{filename}</span>
 				<span className={cx(styles.dims, "dib")}>{`${width}x${height}`}</span>
 			</div>
+
+			{!horizontal ? <span className={cx(styles["actions-bg"], "pabs")}></span> : null}
 
 			{price ? <div className={cx(styles.price, {
 				["pabs"] : !horizontal

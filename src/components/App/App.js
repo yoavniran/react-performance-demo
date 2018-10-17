@@ -6,6 +6,7 @@ import {selectViewState} from "../../selectors";
 import SelectionView from "../SelectionView/SelectionView";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoView from "../PhotoView/PhotoView";
+import Footer from "../Footer/Footer";
 
 import styles from "./App.module.scss";
 
@@ -15,6 +16,8 @@ const App = (props) => (
 
 		{props.viewState === VIEW_STATES.MINIFIED ?
 			<PhotoView />: null}
+
+		<Footer/>
 	</div>
 );
 
@@ -26,4 +29,3 @@ export default connect(
 	}),
 	null
 )(RenderCounter(App));
-// export default App;

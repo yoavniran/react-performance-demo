@@ -3,7 +3,7 @@
   box-sizing: border-box;
   background: #353232;
   min-height: 60px;
-  border-bottom: 1px rgba(0, 0, 0, 0.6) solid;
+  border-bottom: 1px var(--active) solid;
 }
 
 .counter {

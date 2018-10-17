@@ -12,7 +12,7 @@ import styles from "./PhotosList.module.scss";
 
 const renderFetchStatus = (fetchStatus) => {
 	return (fetchStatus !== FETCH_STATUSES.NONE) ?
-		<div className={cx(styles.status, "")}>
+		<div className={cx(styles.status, "pabs")}>
 			<LoadingIndicator size="32"/>
 		</div> : null;
 };
@@ -20,7 +20,7 @@ const renderFetchStatus = (fetchStatus) => {
 const PhotosList = (props) => {
 
 	return (
-		<div className={cx(styles.container)}>
+		<div className={cx(styles.container, "h-100")}>
 			{renderFetchStatus(props.fetchStatus)}
 
 			{props.photos.map((p) => (
@@ -42,4 +42,4 @@ export default connect(
 		photos: selectSelectedPhotos(state),
 	}),
 	boundActions,
-)(RenderCounter(PhotosList));
+)(RenderCounter(PhotosList, ()=>({style: {height: "100%"}})));
