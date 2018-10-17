@@ -1,18 +1,28 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import cx from "classnames";
-import {TYPES} from "../../consts";
+import {FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoItem from "../PhotoItem/PhotoItem";
-import {selectSelectedPhotos} from "./PhotosList.selectors";
+import {selectSelectedPhotos, selectFetchStatus} from "./PhotosList.selectors";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 import styles from "./PhotosList.module.scss";
+
+const renderFetchStatus = (fetchStatus) => {
+	return (fetchStatus !== FETCH_STATUSES.NONE) ?
+		<div className={cx(styles.status, "")}>
+			<LoadingIndicator size="32"/>
+		</div> : null;
+};
 
 const PhotosList = (props) => {
 
 	return (
 		<div className={cx(styles.container)}>
+			{renderFetchStatus(props.fetchStatus)}
+
 			{props.photos.map((p) => (
 				<PhotoItem
 					key={p.url}
@@ -28,6 +38,7 @@ export default connect(
 	//todo move selecting of most photo data into the item itself !!!!!!!!!
 
 	(state) => ({
+		fetchStatus: selectFetchStatus(state),
 		photos: selectSelectedPhotos(state),
 	}),
 	boundActions,

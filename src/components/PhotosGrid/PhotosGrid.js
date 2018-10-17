@@ -37,7 +37,7 @@ class PhotosGrid extends Component {
 		const {photos, fetchStatus} = this.props;
 
 		return (
-			<div className={cx(styles.container, "pr w-100 df flex-wrap")}>
+			<div className={cx(styles.container, "pr w-100 h-100 df flex-wrap")}>
 
 				{this.renderFetchStatus(fetchStatus)}
 

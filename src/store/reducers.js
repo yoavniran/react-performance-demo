@@ -20,6 +20,9 @@ const getPhotoIndex = (photos, id) =>
 const setExposedPhoto = (state, photo) =>
 	state.set("exposedPhoto", photo);
 
+const updateExposedPhotoToFirstSelected = (state) =>
+	setExposedPhoto(state, state.photos.find((p) => p.selected));
+
 export default createReducer(initialState, {
 
 	[TYPES.SET_PHOTOS]: (state, {payload}) =>
@@ -31,11 +34,16 @@ export default createReducer(initialState, {
 	[TYPES.SET_SELECTED_PHOTO]: (state, {payload}) => {
 		const index = getPhotoIndex(state.photos, payload.id);
 
+		state = state.setIn(["photos", index, "selected"], payload.selected);
+
 		if (payload.selected) {
 			state = setExposedPhoto(state, state.photos[index]); //todo: same object...
 		}
+		else if (state.exposedPhoto.public_id === payload.id) {
+			state = updateExposedPhotoToFirstSelected(state);
+		}
 
-		return state.setIn(["photos", index, "selected"], payload.selected);
+		return state;
 	},
 
 	[TYPES.TOGGLE_VIEW_STATE]: (state) =>
@@ -48,5 +56,44 @@ export default createReducer(initialState, {
 		state.set("photosFetchStatus", payload.status),
 
 	[TYPES.SET_EXPOSED_PHOTO]: (state, {payload}) =>
-		setExposedPhoto(state, payload.photo),
+		setExposedPhoto(state,
+			state.photos[getPhotoIndex(state.photos, payload.id)]),
+
+	[TYPES.REMOVE_PHOTO]: (state, {payload}) => {
+		const index = getPhotoIndex(state.photos, payload.id);
+
+		state = state.set("photos",
+			state.photos.slice(0, index)
+				.concat(state.photos.slice((index + 1))));
+
+		if (state.exposedPhoto.public_id === payload.id) {
+			state = updateExposedPhotoToFirstSelected(state);
+		}
+
+		return state;
+	},
+
+	[TYPES.SET_PHOTOS_PRICES]: (state, {payload}) => {
+		const photos = state.photos,
+			newPhotos = [];
+
+		payload.prices.forEach((price) => {
+			const index = getPhotoIndex(photos, price.id);
+
+			if (~index) {
+
+				if (photos[index].price !== price.price){
+					console.log("!!!!!!!!!!! NEW PRICE !!!!!!!!!! ", index, price.price);
+				}
+
+				//todo !!!!!!!!!! only create new object for price change
+				newPhotos.push({
+					...photos[index],
+					price: price.price,
+				});
+			}
+		});
+
+		return state.set("photos", newPhotos);
+	},
 });

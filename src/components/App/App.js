@@ -5,7 +5,7 @@ import {VIEW_STATES} from "../../consts";
 import {selectViewState} from "../../selectors";
 import SelectionView from "../SelectionView/SelectionView";
 import RenderCounter from "../RenderCounter/RenderCounter";
-import ImageExpose from "../ImageExpose/ImageExpose";
+import PhotoView from "../PhotoView/PhotoView";
 
 import styles from "./App.module.scss";
 
@@ -14,7 +14,7 @@ const App = (props) => (
 		<SelectionView viewState={props.viewState}/>
 
 		{props.viewState === VIEW_STATES.MINIFIED ?
-			<ImageExpose />: null}
+			<PhotoView />: null}
 	</div>
 );
 

@@ -10,3 +10,7 @@
   width: 600px;
   border: 1px solid var(--active);
 }
+
+.section{
+  max-height: calc(100% - 70px);
+}

@@ -6,6 +6,7 @@ const takePhotoProps = (photo) =>({
 	height: photo.height,
 	url: photo.secure_url,
 	selected: photo.selected,
+	price: photo.price,
 });
 
 const selectViewState = (state) =>

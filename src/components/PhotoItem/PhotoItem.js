@@ -11,9 +11,24 @@ import styles from "./PhotoItem.module.scss";
 
 //todo: !!!!!!! passing item as object into props instead of spreading props
 
-const PhotoItem = (props) => {
+const toggleSelected = (e, props) => {
+	const {id, selected} = props.item;
+	props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
 
-	const {id, filename, width, height, selected} = props.item,
+	e.stopPropagation();
+};
+
+const deletePhoto = (e, props) => {
+	props[TYPES.REMOVE_PHOTO]({id: props.item.id});
+	e.stopPropagation();
+};
+
+const setExposed = (props) => {
+	props[TYPES.SET_EXPOSED_PHOTO]({id: props.item.id});
+};
+
+const PhotoItem = (props) => {
+	const {id, filename, width, height, selected, price} = props.item,
 		horizontal = props.horizontal;
 
 	return (
@@ -22,12 +37,14 @@ const PhotoItem = (props) => {
 				[`${styles.horizontal} df center `]: horizontal,
 				"dib": !horizontal
 			})}
-			onClick={() => {
-				props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected})
+			onClick={(e) => {
+				if (!horizontal) {
+					toggleSelected(e, props);
+				}
+				else {
+					setExposed(props);
+				}
 			}}>
-
-			{selected && !horizontal ? <Svg path={icons.check}
-			                 className={cx(styles.check, "pabs")} size="m" fill="#6bd6ef" /> : null}
 
 			<Image className={cx(styles.image, {[styles["hor-image"]]: horizontal})}
 			       cloudName={CLOUD}
@@ -35,18 +52,28 @@ const PhotoItem = (props) => {
 			       height={horizontal ? "240" : "720"}
 			       width={horizontal ? "240" : "720"} crop="scale"/>
 
-			<div className={cx(styles.info, "df", {
-				"just-between": !horizontal,
-				[`${styles["info-hor"]} just-between`]: horizontal,
+			<div className={cx(styles.info, "df just-between", {
+				[`${styles["info-hor"]} `]: horizontal,
 			})}>
 				<span className={cx(styles.name, "dib")} title={filename}>{filename}</span>
 				<span className={cx(styles.dims, "dib")}>{`${width}x${height}`}</span>
 			</div>
 
-			<div className={cx(styles.actions, "df pabs",{
+			{price ? <div className={cx(styles.price, {
+				["pabs"] : !horizontal
+			})}>${price}</div> : null}
+
+			<div className={cx(styles.actions, "df center", {
+				"pabs": !horizontal,
 				[`${styles["actions-hor"]}`]: horizontal
 			})}>
-				<Svg className={cx(styles.action)} path={icons.delete} size="xl" fill="#ffffff"/>
+				{selected ? <Svg path={icons.check}
+				                 className={cx(styles.check)} size="xl" title="un-select"
+				                 fill="#6bd6ef" onClick={(e) => toggleSelected(e, props)}/> : null}
+				<Svg className={cx(styles.action)}
+				     title="delete"
+				     path={icons.delete} size="xl" fill="#ffffff"
+				     onClick={(e) => deletePhoto(e, props)}/>
 			</div>
 		</article>
 	);

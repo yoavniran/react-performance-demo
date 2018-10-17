@@ -1,4 +1,14 @@
 .container {
   overflow-y: auto;
   overflow-x: hidden;
+  background: var(--main-bg);
+  opacity: 0.92;
+}
+
+.status {
+  position: relative;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  float:right;
 }

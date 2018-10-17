@@ -16,13 +16,23 @@
   width: 100%;
   max-width: none;
   min-height: unset;
-  margin:0;
+  margin: 0;
   border-bottom: var(--border);
+
+  &:hover {
+    box-shadow: none;
+    background: var(--dark-gray);
+  }
+}
+
+.price {
+  top: 2px;
+  left: 2px;
+  font-size: 14px;
+  margin-left: 6px;
 }
 
 .check {
-  top: 4px;
-  left: 4px;
 }
 
 .image {
@@ -46,7 +56,7 @@
   flex-grow: 2;
 }
 
-.name{
+.name {
   max-width: 60%;
   white-space: nowrap;
   overflow: hidden;
@@ -56,10 +66,13 @@
 .actions {
   top: 0;
   right: 0;
-  margin: 5px;
+  margin: 5px 5px 5px 20px;
+  min-width: 30px;
 }
 
 .action {
+  margin-left: 4px;
+
   &:hover {
     box-shadow: 0 0 10px 2px #00000073 inset
   }

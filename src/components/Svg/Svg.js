@@ -22,11 +22,12 @@ const getStyle = (size, fill) => {
 	};
 };
 
-const Svg = ({path, fill, className, size, onClick}) =>
+const Svg = ({path, fill, className, size, onClick, title}) =>
 	<svg className={cx("db", className)}
 	     style={getStyle(size, fill)}
 	     viewBox="0 0 24 24"
 	     preserveAspectRatio="xMidYMid"
+	     title={title}
 	     onClick={onClick}>
 		<path d={path}/>
 	</svg>;

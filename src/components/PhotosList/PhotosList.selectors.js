@@ -3,6 +3,8 @@ import {takePhotoProps} from "../../selectors";
 
 const getPhotos = (state) => state.photos;
 
+const selectFetchStatus = (state) => state.photosFetchStatus;
+
 const selectSelectedPhotos = createSelector(
 	getPhotos,
 	(photos) =>
@@ -12,4 +14,5 @@ const selectSelectedPhotos = createSelector(
 
 export {
 	selectSelectedPhotos,
+	selectFetchStatus,
 }
