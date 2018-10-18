@@ -46,7 +46,7 @@ class PhotosGrid extends Component {
 				{photos.map((p) => (
 					<PhotoItem
 						key={p.url}
-						item={p} />
+						item={p}/>
 				))}
 			</div>
 		);
@@ -60,7 +60,6 @@ export default connect(
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
 		photos: selectPhotos(state),
-		// viewState: selectViewState(state),
 	}),
 	boundActions,
-)(RenderCounter(PhotosGrid));
+)(RenderCounter(PhotosGrid, () => ({style: {height: "100%"}})));

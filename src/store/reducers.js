@@ -46,6 +46,9 @@ export default createReducer(initialState, {
 		return state;
 	},
 
+	[TYPES.CLEAR_PHOTOS]: (state) =>
+		state.set("photos", []),
+
 	[TYPES.TOGGLE_VIEW_STATE]: (state) =>
 		state.set("viewState",
 			(state.viewState === VIEW_STATES.EXPANDED ?

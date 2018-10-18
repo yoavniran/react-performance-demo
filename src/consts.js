@@ -1,4 +1,3 @@
-
 export const CLOUD = "yoav-cloud";
 
 export const VIEW_STATES = {
@@ -28,4 +27,6 @@ export const TYPES = {
 	REMOVE_PHOTO: "REMOVE_PHOTO",
 
 	SET_PHOTOS_PRICES: "SET_PHOTOS_PRICES",
+
+	CLEAR_PHOTOS: "CLEAR_PHOTOS",
 };
