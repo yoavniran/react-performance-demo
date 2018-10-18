@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import cx from "classnames";
 import {connect} from "react-redux";
 import {Image} from "cloudinary-react";
@@ -13,8 +13,13 @@ const PhotoView = (props) => (
 		"df center just-center": !props.photo,
 	})}>
 		{props.photo ?
-			<Image className={cx(styles.image)}
-			       cloudName={CLOUD} publicId={props.photo.id} responsive={true}/> :
+			<Fragment>
+				<Image className={cx(styles.image)}
+				       cloudName={CLOUD} publicId={props.photo.id} responsive={true}/>
+				<span className={cx(styles.price, "pabs")}>
+					${props.photo.price}
+				</span>
+			</Fragment> :
 			<div className={cx(styles.text)}>
 				No Photo Selected
 			</div>}

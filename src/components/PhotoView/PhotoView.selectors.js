@@ -1,12 +1,11 @@
 import {createSelector} from "reselect";
+import {takePhotoProps} from "../../selectors"
 
 const getPhoto = (state) => state.exposedPhoto;
 
 const selectExposedPhoto = createSelector(
 	getPhoto,
-	(photo) => photo ? ({
-		id: photo.public_id,
-	}) : null
+	(photo) => photo ? takePhotoProps(photo) : null
 );
 
 export {
