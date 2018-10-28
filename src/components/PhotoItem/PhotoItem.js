@@ -1,4 +1,5 @@
 import React from "react";
+import { unstable_trace as trace } from "scheduler/tracing";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
@@ -7,29 +8,36 @@ import bindActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import Svg from "../Svg/Svg";
 import icons from "../../assets/icons";
+import {selectPhotoById} from "./PhotoItem.selectors";
+import {getPhotoByIdSelector} from "./PhotoItem.selectors";
+
 import styles from "./PhotoItem.module.scss";
 
-//todo: !!!!!!! passing item as object into props instead of spreading props
-
 const toggleSelected = (e, props) => {
-	const {id, selected} = props.item;
-	props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
+	const {id, selected} = props;
+
+	trace("Select click", performance.now(), () => {
+		props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
+	});
 
 	e.stopPropagation();
 };
 
 const deletePhoto = (e, props) => {
-	props[TYPES.REMOVE_PHOTO]({id: props.item.id});
+	props[TYPES.REMOVE_PHOTO]({id: props.id});
 	e.stopPropagation();
 };
 
 const setExposed = (props) => {
-	props[TYPES.SET_EXPOSED_PHOTO]({id: props.item.id});
+	props[TYPES.SET_EXPOSED_PHOTO]({id: props.id});
 };
 
 const PhotoItem = (props) => {
-	const {id, filename, width, height, selected, price} = props.item,
-		horizontal = props.horizontal;
+
+	const {horizontal, id, filename, width, height, price, selected} = props;
+	// const horizontal = props.horizontal;
+
+	console.log("############## RENDERING PHOTO ITEM");
 
 	return (
 		<article
@@ -84,8 +92,18 @@ const PhotoItem = (props) => {
 };
 
 export default connect(
-	null,
+	() => { //using the factory pattern
+		const photoSelector = getPhotoByIdSelector();
+
+		return (state, props) => ({ //return function to react-redux' mapstate
+			...photoSelector(state, props),
+		});
+	},
+	// (state, props) => ({
+	// 	...selectPhotoById(state, props),
+	// }),
+	// (state, props) => ({
+	// 	item: selectPhotoById(state, props),
+	// }),
 	bindActions,
 )(RenderCounter(PhotoItem));
-
-//todo: PureComponent !!!!!!!!!!!!!

@@ -10,6 +10,8 @@ const initialState = Immutable({
 	photos: [],
 	nextCursor: null,
 
+	selected: [],
+
 	exposedPhoto: null,
 });
 
@@ -32,15 +34,26 @@ export default createReducer(initialState, {
 		}),
 
 	[TYPES.SET_SELECTED_PHOTO]: (state, {payload}) => {
-		const index = getPhotoIndex(state.photos, payload.id);
 
-		state = state.setIn(["photos", index, "selected"], payload.selected);
+		const selectedIndex = state.selected.indexOf(payload.id);
+
+		if (!~selectedIndex) { //not found in the selected array yet
+			if (payload.selected) {
+				state = state.set("selected",
+					state.selected.concat(payload.id));
+			}
+		}
+		else if (!payload.selected) { //need to remove from the array
+			state = state.set("selected",
+				state.selected.filter((s) => s !== payload.id));
+		}
 
 		if (payload.selected) {
-			state = setExposedPhoto(state, state.photos[index]); //todo: same object...
+			const index = getPhotoIndex(state.photos, payload.id);
+			state = setExposedPhoto(state, state.photos[index]);
 		}
 		else if (state.exposedPhoto.public_id === payload.id) {
-			state = updateExposedPhotoToFirstSelected(state);
+			state = updateExposedPhotoToFirstSelected(state); //unselected item shouldn't stay as the exposed photo
 		}
 
 		return state;

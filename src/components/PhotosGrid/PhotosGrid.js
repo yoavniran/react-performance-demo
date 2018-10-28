@@ -3,9 +3,8 @@ import {connect} from "react-redux";
 import cx from "classnames";
 import {TYPES, FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
-// import {selectViewState} from "../../selectors";
 import {
-	selectPhotos,
+	selectPhotoIds,
 	selectFetchStatus,
 } from "./PhotosGrid.selectors";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
@@ -13,10 +12,6 @@ import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoItem from "../PhotoItem/PhotoItem";
 
 import styles from "./PhotosGrid.module.scss";
-
-//todo: PureComponent !!!!!!!!!!!!!
-
-//todo: keys gotchas !!!!!!!!! BASIC
 
 class PhotosGrid extends Component {
 
@@ -34,6 +29,8 @@ class PhotosGrid extends Component {
 	}
 
 	render() {
+		console.log(">>>>>>>>>>>> RENDERING PHOTOS GRID");
+
 		const {photos, fetchStatus} = this.props;
 
 		return (
@@ -43,10 +40,10 @@ class PhotosGrid extends Component {
 
 				{!photos.length ? <LoadingIndicator/> : null}
 
-				{photos.map((p) => (
+				{photos.map((pId) => (
 					<PhotoItem
-						key={p.url}
-						item={p}/>
+						key={pId}
+						id={pId}/>
 				))}
 			</div>
 		);
@@ -54,12 +51,9 @@ class PhotosGrid extends Component {
 }
 
 export default connect(
-//todo !!!!!!!!!!!!! selecting too much data (selected photos)
-	//todo move selecting of most photo data into the item itself !!!!!!!!!
-
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
-		photos: selectPhotos(state),
+		photos: selectPhotoIds(state),
 	}),
 	boundActions,
 )(RenderCounter(PhotosGrid, () => ({style: {height: "100%"}})));

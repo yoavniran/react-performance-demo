@@ -1,12 +1,13 @@
 import {createSelector} from "reselect";
 
 const getPhotos = (state) => state.photos;
-
+const getSelected = (state) => state.selected;
 
 const selectPhotosCount = createSelector(
+	getSelected,
 	getPhotos,
-	(photos) =>({
-		selected: photos.filter((p) => p.selected).length,
+	(selected, photos) =>({
+		selected: selected.length,
 		all: photos.length,
 	})
 );

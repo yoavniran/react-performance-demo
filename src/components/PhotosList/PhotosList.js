@@ -23,10 +23,10 @@ const PhotosList = (props) => {
 		<div className={cx(styles.container, "h-100")}>
 			{renderFetchStatus(props.fetchStatus)}
 
-			{props.photos.map((p) => (
+			{props.photos.map((id) => (
 				<PhotoItem
-					key={p.url}
-					item={p}
+					key={id}
+					id={id}
 					horizontal/>
 			))}
 		</div>
@@ -34,9 +34,6 @@ const PhotosList = (props) => {
 };
 
 export default connect(
-	//todo !!!!!!!!!!!!! selecting too much data (selected photos)
-	//todo move selecting of most photo data into the item itself !!!!!!!!!
-
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
 		photos: selectSelectedPhotos(state),
