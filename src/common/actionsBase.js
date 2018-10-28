@@ -8,8 +8,6 @@ const getActionsSettings = (types, overrides = {}) =>
     }, {});
 
 
-//todo: support actions as array and generate symbol for the value and return the key/val map
-
 const getBoundActionCreators = (actions) =>
     (dispatch) =>
         bindActionCreators(
