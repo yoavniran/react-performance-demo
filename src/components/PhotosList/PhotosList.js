@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {FETCH_STATUSES} from "../../consts";

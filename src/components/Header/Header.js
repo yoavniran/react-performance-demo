@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import cx from "classnames";
 import {connect} from "react-redux";
 import {TYPES, VIEW_STATES} from "../../consts";
@@ -16,7 +16,7 @@ const Header = (props) => (
 		<div className={cx(styles.title, "df center")}>
 			<h2>Awesome Photo Store</h2>
 			<span className={cx(styles.powered)}>powered by</span>
-			<img src={cldLogo} className={cx(styles.logo)}/>
+			<img src={cldLogo} className={cx(styles.logo)} alt="powered by Cloudinary"/>
 		</div>
 
 		<div className={cx(styles.counter)} title="selected">

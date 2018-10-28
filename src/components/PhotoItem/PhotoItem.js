@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
@@ -64,7 +64,7 @@ const PhotoItem = (props) => {
 			{!horizontal ? <span className={cx(styles["actions-bg"], "pabs")}></span> : null}
 
 			{price ? <div className={cx(styles.price, {
-				["pabs"] : !horizontal
+				"pabs" : !horizontal
 			})}>${price}</div> : null}
 
 			<div className={cx(styles.actions, "df center", {

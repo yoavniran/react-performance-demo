@@ -5,7 +5,7 @@ import styles from "./LoadingIndicator.module.scss";
 
 const LoadingIndicator = ({className, size}) =>
 	<div className={cx(styles.container, "df center just-center", className)}>
-		<img width={size || "100"} height={size ||"100"} src={loaderImg} />
+		<img width={size || "100"} height={size ||"100"} src={loaderImg} alt="loading..."/>
 	</div>;
 
 export default LoadingIndicator;

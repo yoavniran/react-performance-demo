@@ -2,9 +2,8 @@ import {bindActionCreators} from "redux";
 import isFunction from "lodash/isFunction";
 
 const getActionsSettings = (types, overrides = {}) =>
-    // $FlowFixMe
-    Object.values(types).reduce((res, tVal) => {
-        res[tVal] = overrides && overrides[tVal] || true;
+    Object.value(types).reduce((res, tVal) => {
+        res[tVal] = (overrides && overrides[tVal]) || true;
         return res;
     }, {});
 
