@@ -87,8 +87,10 @@ export default connect(
 		const photo = state.photos
 			.find((p) => p.public_id === props.id);
 
+		const selected = !!~state.selected.indexOf(props.id);
+
 		return {
-			item: takePhotoProps(photo),
+			item: takePhotoProps({...photo, selected}),
 		};
 	},
 	bindActions,
