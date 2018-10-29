@@ -12,9 +12,11 @@
   right: 10px;
   background: rgba(93, 85, 85, 0.4);
   color: #000000;
+  z-index: 1;
 
   &:hover{
     background: #000000;
     color: #ffffff;
+    z-index: 10;
   }
 }
