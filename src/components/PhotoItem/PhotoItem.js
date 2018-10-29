@@ -9,8 +9,6 @@ import Svg from "../Svg/Svg";
 import icons from "../../assets/icons";
 import styles from "./PhotoItem.module.scss";
 
-//todo: !!!!!!! passing item as object into props instead of spreading props
-
 const toggleSelected = (e, props) => {
 	const {id, selected} = props.item;
 	props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
@@ -87,5 +85,3 @@ export default connect(
 	null,
 	bindActions,
 )(RenderCounter(PhotoItem));
-
-//todo: PureComponent !!!!!!!!!!!!!

@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import cx from "classnames";
 import {TYPES, FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
-// import {selectViewState} from "../../selectors";
 import {
 	selectPhotos,
 	selectFetchStatus,
@@ -13,10 +12,6 @@ import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoItem from "../PhotoItem/PhotoItem";
 
 import styles from "./PhotosGrid.module.scss";
-
-//todo: PureComponent !!!!!!!!!!!!!
-
-//todo: keys gotchas !!!!!!!!! BASIC
 
 class PhotosGrid extends Component {
 
@@ -54,9 +49,6 @@ class PhotosGrid extends Component {
 }
 
 export default connect(
-//todo !!!!!!!!!!!!! selecting too much data (selected photos)
-	//todo move selecting of most photo data into the item itself !!!!!!!!!
-
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
 		photos: selectPhotos(state),
