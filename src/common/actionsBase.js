@@ -2,7 +2,7 @@ import {bindActionCreators} from "redux";
 import isFunction from "lodash/isFunction";
 
 const getActionsSettings = (types, overrides = {}) =>
-    Object.value(types).reduce((res, tVal) => {
+    Object.values(types).reduce((res, tVal) => {
         res[tVal] = (overrides && overrides[tVal]) || true;
         return res;
     }, {});
