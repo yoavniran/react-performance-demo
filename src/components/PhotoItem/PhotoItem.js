@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
 import {TYPES, CLOUD} from "../../consts";
+import {takePhotoProps} from "../../selectors";
 import bindActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import Svg from "../Svg/Svg";
@@ -82,6 +83,13 @@ const PhotoItem = (props) => {
 };
 
 export default connect(
-	null,
+	(state, props) => {
+		const photo = state.photos
+			.find((p) => p.public_id === props.id);
+
+		return {
+			item: takePhotoProps(photo),
+		};
+	},
 	bindActions,
 )(RenderCounter(PhotoItem));

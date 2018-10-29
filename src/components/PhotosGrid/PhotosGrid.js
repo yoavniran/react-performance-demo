@@ -4,7 +4,7 @@ import cx from "classnames";
 import {TYPES, FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
 import {
-	selectPhotos,
+	selectPhotoIds,
 	selectFetchStatus,
 } from "./PhotosGrid.selectors";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
@@ -38,10 +38,10 @@ class PhotosGrid extends Component {
 
 				{!photos.length ? <LoadingIndicator/> : null}
 
-				{photos.map((p) => (
+				{photos.map((pId) => (
 					<PhotoItem
-						key={p.url}
-						item={p}/>
+						key={pId}
+						id={pId}/>
 				))}
 			</div>
 		);
@@ -51,7 +51,7 @@ class PhotosGrid extends Component {
 export default connect(
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
-		photos: selectPhotos(state),
+		photos: selectPhotoIds(state),
 	}),
 	boundActions,
 )(RenderCounter(PhotosGrid, () => ({style: {height: "100%"}})));

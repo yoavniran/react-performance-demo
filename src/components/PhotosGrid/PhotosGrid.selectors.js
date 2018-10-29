@@ -1,19 +1,15 @@
 import {createSelector} from "reselect";
-import {takePhotoProps} from "../../selectors";
 
 const getPhotos = (state) => state.photos;
 
-const selectPhotos = createSelector(
+const selectPhotoIds = createSelector(
 	getPhotos,
-	(photos) => {
-		// console.log("!!!!!!!!!!! recalculating photos !!!!!!!!");
-		return photos.map(takePhotoProps)
-	},
+	(photos) => photos.map((p) => p.public_id),
 );
 
 const selectFetchStatus = (state) => state.photosFetchStatus;
 
 export {
-	selectPhotos,
 	selectFetchStatus,
+	selectPhotoIds,
 };
