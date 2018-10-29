@@ -10,7 +10,7 @@ module.exports = (req, info) => {
 	return cloudinary.search({
 		cursor,
 		tags: ["reactnext"],
-		max: 80,
+		max: 100,
 	})
 		.then((result) => {
 

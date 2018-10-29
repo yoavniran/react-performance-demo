@@ -44,9 +44,9 @@ const fetchPhotos = async (getState, dispatcher, cursor = null) => {
 		if (response.meta.next) {
 			fetchPhotos(getState, dispatcher, response.meta.next);
 		}
-		else {
-			fetchPrices(getState, dispatcher);
-		}
+		// else {
+		// 	// fetchPrices(getState, dispatcher);
+		// }
 	}
 	else {
 		dispatcher(TYPES.SET_FETCH_STATUS, {status: FETCH_STATUSES.FAILED});
