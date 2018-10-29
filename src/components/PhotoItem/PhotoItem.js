@@ -3,13 +3,12 @@ import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
 import {TYPES, CLOUD} from "../../consts";
+import {takePhotoProps} from "../../selectors";
 import bindActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import Svg from "../Svg/Svg";
 import icons from "../../assets/icons";
 import styles from "./PhotoItem.module.scss";
-
-//todo: !!!!!!! passing item as object into props instead of spreading props
 
 const toggleSelected = (e, props) => {
 	const {id, selected} = props.item;
@@ -84,8 +83,15 @@ const PhotoItem = (props) => {
 };
 
 export default connect(
-	null,
+	(state, props) => {
+		const photo = state.photos
+			.find((p) => p.public_id === props.id);
+
+		const selected = !!~state.selected.indexOf(props.id);
+
+		return {
+			item: takePhotoProps({...photo, selected}),
+		};
+	},
 	bindActions,
 )(RenderCounter(PhotoItem));
-
-//todo: PureComponent !!!!!!!!!!!!!

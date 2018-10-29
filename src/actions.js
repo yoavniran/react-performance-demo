@@ -45,7 +45,7 @@ const fetchPhotos = async (getState, dispatcher, cursor = null) => {
 			fetchPhotos(getState, dispatcher, response.meta.next);
 		}
 		else {
-			fetchPrices(getState, dispatcher);
+			// fetchPrices(getState, dispatcher);
 		}
 	}
 	else {
