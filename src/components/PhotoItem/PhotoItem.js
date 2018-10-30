@@ -82,20 +82,25 @@ const PhotoItem = (props) => {
 	);
 };
 
-const photoItemSelector = (state, props) => {
-	const photo = state.photos
-		.find((p) => p.public_id === props.id);
 
-	const selected = !!~state.selected.indexOf(props.id);
-
+const getPhotoItemProps = (photo, selected) => {
 	let i = 0;
-	while (i < 10000000){
+	while (i < 100000){
 		i++
 	}
 
 	return {
 		...takePhotoProps({...photo, selected}),
 	};
+};
+
+const photoItemSelector = (state, props) => {
+	const photo = state.photos
+		.find((p) => p.public_id === props.id);
+
+	const selected = !!~state.selected.indexOf(props.id);
+
+	return getPhotoItemProps(photo, selected);
 };
 
 export default connect(
