@@ -11,23 +11,23 @@ import icons from "../../assets/icons";
 import styles from "./PhotoItem.module.scss";
 
 const toggleSelected = (e, props) => {
-	const {id, selected} = props.item;
+	const {id, selected} = props;
 	props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
 
 	e.stopPropagation();
 };
 
 const deletePhoto = (e, props) => {
-	props[TYPES.REMOVE_PHOTO]({id: props.item.id});
+	props[TYPES.REMOVE_PHOTO]({id: props.id});
 	e.stopPropagation();
 };
 
 const setExposed = (props) => {
-	props[TYPES.SET_EXPOSED_PHOTO]({id: props.item.id});
+	props[TYPES.SET_EXPOSED_PHOTO]({id: props.id});
 };
 
 const PhotoItem = (props) => {
-	const {id, filename, width, height, selected, price} = props.item,
+	const {id, filename, width, height, selected, price} = props,
 		horizontal = props.horizontal;
 
 	return (
@@ -82,16 +82,23 @@ const PhotoItem = (props) => {
 	);
 };
 
+const photoItemSelector = (state, props) => {
+	const photo = state.photos
+		.find((p) => p.public_id === props.id);
+
+	const selected = !!~state.selected.indexOf(props.id);
+
+	let i = 0;
+	while (i < 10000000){
+		i++
+	}
+
+	return {
+		...takePhotoProps({...photo, selected}),
+	};
+};
+
 export default connect(
-	(state, props) => {
-		const photo = state.photos
-			.find((p) => p.public_id === props.id);
-
-		const selected = !!~state.selected.indexOf(props.id);
-
-		return {
-			item: takePhotoProps({...photo, selected}),
-		};
-	},
+	photoItemSelector,
 	bindActions,
 )(RenderCounter(PhotoItem));
