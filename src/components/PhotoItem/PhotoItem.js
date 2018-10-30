@@ -82,16 +82,22 @@ const PhotoItem = (props) => {
 	);
 };
 
+const getPhotoItemProps = (photo, selected) => {
+	return {
+		item: takePhotoProps({...photo, selected}),
+	};
+};
+
+const photoItemSelector = (state, props) => {
+	const photo = state.photos
+		.find((p) => p.public_id === props.id);
+
+	const selected = !!~state.selected.indexOf(props.id);
+
+	return getPhotoItemProps(photo, selected);
+};
+
 export default connect(
-	(state, props) => {
-		const photo = state.photos
-			.find((p) => p.public_id === props.id);
-
-		const selected = !!~state.selected.indexOf(props.id);
-
-		return {
-			item: takePhotoProps({...photo, selected}),
-		};
-	},
+	photoItemSelector,
 	bindActions,
 )(RenderCounter(PhotoItem));
