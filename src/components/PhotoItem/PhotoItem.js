@@ -3,11 +3,12 @@ import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
 import {TYPES, CLOUD} from "../../consts";
-import {takePhotoProps} from "../../selectors";
 import bindActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import Svg from "../Svg/Svg";
 import icons from "../../assets/icons";
+import {getPhotoByIdSelector} from "./PhotoItem.selectors";
+
 import styles from "./PhotoItem.module.scss";
 
 const toggleSelected = (e, props) => {
@@ -82,28 +83,15 @@ const PhotoItem = (props) => {
 	);
 };
 
+const getMapState = () => { //using the factory pattern
+	const photoSelector = getPhotoByIdSelector();
 
-const getPhotoItemProps = (photo, selected) => {
-	let i = 0;
-	while (i < 1000000){
-		i++
-	}
-
-	return {
-		...takePhotoProps({...photo, selected}),
-	};
-};
-
-const photoItemSelector = (state, props) => {
-	const photo = state.photos
-		.find((p) => p.public_id === props.id);
-
-	const selected = !!~state.selected.indexOf(props.id);
-
-	return getPhotoItemProps(photo, selected);
+	return (state, props) => ({ //return function to react-redux' mapstate
+		...photoSelector(state, props),
+	});
 };
 
 export default connect(
-	photoItemSelector,
+	getMapState,
 	bindActions,
 )(RenderCounter(PhotoItem));
