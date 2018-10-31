@@ -5,7 +5,7 @@ import {FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoItem from "../PhotoItem/PhotoItem";
-import {selectSelectedPhotos, selectFetchStatus} from "./PhotosList.selectors";
+import {selectFetchStatus} from "./PhotosList.selectors";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 import styles from "./PhotosList.module.scss";
@@ -23,10 +23,10 @@ const PhotosList = (props) => {
 		<div className={cx(styles.container, "h-100")}>
 			{renderFetchStatus(props.fetchStatus)}
 
-			{props.photos.map((p) => (
+			{props.photos.map((id) => (
 				<PhotoItem
-					key={p.url}
-					item={p}
+					key={id}
+					id={id}
 					horizontal/>
 			))}
 		</div>
@@ -34,12 +34,9 @@ const PhotosList = (props) => {
 };
 
 export default connect(
-	//todo !!!!!!!!!!!!! selecting too much data (selected photos)
-	//todo move selecting of most photo data into the item itself !!!!!!!!!
-
 	(state) => ({
 		fetchStatus: selectFetchStatus(state),
-		photos: selectSelectedPhotos(state),
+		photos: state.selected,
 	}),
 	boundActions,
 )(RenderCounter(PhotosList, ()=>({style: {height: "100%"}})));
