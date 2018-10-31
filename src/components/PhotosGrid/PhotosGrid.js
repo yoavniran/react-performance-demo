@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import cx from "classnames";
+import {FixedSizeGrid as Grid} from "react-window";
 import {TYPES, FETCH_STATUSES} from "../../consts";
 import boundActions from "../../actions";
 import {
@@ -12,6 +13,8 @@ import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoItem from "../PhotoItem/PhotoItem";
 
 import styles from "./PhotosGrid.module.scss";
+
+const getItemIndex = (col, row, colCount) => ((row * colCount) + col);
 
 class PhotosGrid extends Component {
 
@@ -28,21 +31,38 @@ class PhotosGrid extends Component {
 			</div> : null;
 	}
 
+	renderItems(){
+		const {height, width} = this.props;
+
+		const colCount = Math.floor(width / 250),
+			rowCount = Math.floor(height / 250);
+
+		return <Grid columnCount={colCount}
+		          columnWidth={250}
+		          height={height}
+		          rowCount={(rowCount+1)}
+		          rowHeight={250}
+		          width={width}>
+			{({ columnIndex, rowIndex, style })=>
+				<PhotoItem index={getItemIndex(columnIndex, rowIndex, colCount)} style={style}/>}
+		</Grid>
+	}
+
 	render() {
 		const {photos, fetchStatus} = this.props;
 
 		return (
-			<div className={cx(styles.container, "pr w-100 h-100 df flex-wrap")}>
+			<div className={cx(styles.container, "pr w-100 h-100")}>
 
 				{this.renderFetchStatus(fetchStatus)}
 
-				{!photos.length ? <LoadingIndicator/> : null}
+				{!photos.length ? <LoadingIndicator/> : this.renderItems()}
 
-				{photos.map((pId) => (
-					<PhotoItem
-						key={pId}
-						id={pId}/>
-				))}
+				{/*{photos.map((pId) => (*/}
+					{/*<PhotoItem*/}
+						{/*key={pId}*/}
+						{/*id={pId}/>*/}
+				{/*))}*/}
 			</div>
 		);
 	}

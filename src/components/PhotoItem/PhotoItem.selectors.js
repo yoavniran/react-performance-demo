@@ -22,6 +22,8 @@ export const getPhotoByIdSelector = () =>
 				i++
 			}
 
-			return {...takePhotoProps(photo), selected}
+			const photoProps = photo ? takePhotoProps(photo) : null;
+
+			return {...photoProps, selected};
 		}
 	);

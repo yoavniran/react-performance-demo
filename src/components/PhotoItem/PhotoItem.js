@@ -32,6 +32,7 @@ const PhotoItem = (props) => {
 		horizontal = props.horizontal;
 
 	return (
+		props.id ?
 		<article
 			className={cx(styles.container, "pr pointer", {
 				[`${styles.horizontal} df center `]: horizontal,
@@ -64,7 +65,7 @@ const PhotoItem = (props) => {
 			{!horizontal ? <span className={cx(styles["actions-bg"], "pabs")}></span> : null}
 
 			{price ? <div className={cx(styles.price, {
-				"pabs" : !horizontal
+				"pabs": !horizontal
 			})}>${price}</div> : null}
 
 			<div className={cx(styles.actions, "df center", {
@@ -79,19 +80,26 @@ const PhotoItem = (props) => {
 				     path={icons.delete} size="xl" fill="#ffffff"
 				     onClick={(e) => deletePhoto(e, props)}/>
 			</div>
-		</article>
+		</article> : null
 	);
 };
 
 const getMapState = () => { //using the factory pattern
 	const photoSelector = getPhotoByIdSelector();
 
-	return (state, props) => ({ //return function to react-redux' mapstate
-		...photoSelector(state, props),
-	});
+	return (state, props) => { //return function to react-redux' mapstate
+
+		if (!props.id) {
+			if (state.photos[props.index]) {
+				props = {id: state.photos[props.index].public_id};
+			}
+		}
+
+		return {...photoSelector(state, props)};
+	};
 };
 
 export default connect(
 	getMapState,
 	bindActions,
-)(RenderCounter(PhotoItem));
+)(RenderCounter(PhotoItem, (props)=>({style: props.style})));
