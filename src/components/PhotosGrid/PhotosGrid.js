@@ -41,6 +41,14 @@ class PhotosGrid extends Component {
 			</div> : null;
 	}
 
+	renderLoadingIndicator(){
+		const {width, height} = this.props;
+
+		return <div className="pr" style={{width, height}}>
+			<LoadingIndicator/>
+		</div>
+	}
+
 	renderItems() {
 		const {height, width, photos} = this.props;
 
@@ -73,7 +81,7 @@ class PhotosGrid extends Component {
 				{this.renderFetchStatus(fetchStatus)}
 
 				{!photos.length ?
-					<LoadingIndicator/> :
+					this.renderLoadingIndicator() :
 					this.renderItems()}
 			</div>
 		);
