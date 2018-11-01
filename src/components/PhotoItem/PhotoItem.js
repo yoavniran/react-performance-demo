@@ -1,4 +1,5 @@
 import React from "react";
+import { unstable_trace as trace } from "scheduler/tracing";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {Image} from "cloudinary-react";
@@ -12,7 +13,10 @@ import styles from "./PhotoItem.module.scss";
 
 const toggleSelected = (e, props) => {
 	const {id, selected} = props;
-	props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
+
+	trace("PhotoItem select click", performance.now(), () => {
+		props[TYPES.SET_SELECTED_PHOTO]({id, selected: !selected});
+	});
 
 	e.stopPropagation();
 };
@@ -27,8 +31,7 @@ const setExposed = (props) => {
 };
 
 const PhotoItem = (props) => {
-	const {id, filename, width, height, selected, price} = props,
-		horizontal = props.horizontal;
+	const {id, filename, width, height, selected, price, horizontal} = props;
 
 	return (
 		<article

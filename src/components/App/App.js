@@ -21,8 +21,6 @@ const App = (props) => (
 	</div>
 );
 
-//todo: !!!!!!!!!!!!!!!!! selecting (viewState) state from store in high-level comp
-
 export default connect(
 	(state)=>({
 		viewState: selectViewState(state),
