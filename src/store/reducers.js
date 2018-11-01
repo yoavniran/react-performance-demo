@@ -99,7 +99,7 @@ export default createReducer(initialState, {
 			if (~index) {
 				newPhotos.push({
 					...photos[index],
-					price: price.price,
+					price: price.price, //todo: separate prices to different state prop
 				});
 			}
 		});
