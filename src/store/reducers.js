@@ -27,7 +27,7 @@ export default createReducer(initialState, {
 
 	[TYPES.SET_PHOTOS]: (state, {payload}) =>
 		state.merge({
-			"photos": state.photos.concat(payload.photos),  //todo: !!!!!!! photos is always a new object
+			"photos": state.photos.concat(payload.photos),
 			"nextCursor": payload.nextCursor,
 		}),
 
@@ -37,7 +37,7 @@ export default createReducer(initialState, {
 		state = state.setIn(["photos", index, "selected"], payload.selected);
 
 		if (payload.selected) {
-			state = setExposedPhoto(state, state.photos[index]); //todo: same object...
+			state = setExposedPhoto(state, state.photos[index]);
 		}
 		else if (state.exposedPhoto.public_id === payload.id) {
 			state = updateExposedPhotoToFirstSelected(state);
@@ -84,11 +84,9 @@ export default createReducer(initialState, {
 			const index = getPhotoIndex(photos, price.id);
 
 			if (~index) {
-
-				//todo !!!!!!!!!! only create new object for price change
 				newPhotos.push({
 					...photos[index],
-					price: price.price,
+					price: price.price, //todo: separate prices to different state prop
 				});
 			}
 		});
