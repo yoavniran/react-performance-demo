@@ -32,19 +32,22 @@ class PhotosGrid extends Component {
 	}
 
 	renderItems(){
-		const {height, width} = this.props;
+		const {height, width, photos} = this.props;
 
 		const colCount = Math.floor(width / 250),
-			rowCount = Math.floor(height / 250);
+			rowCount = photos.length / colCount;
 
-		return <Grid columnCount={colCount}
+		return <Grid
+			initialScrollOffset={-260}
+				columnCount={colCount}
 		          columnWidth={250}
 		          height={height}
 		          rowCount={(rowCount+1)}
 		          rowHeight={250}
 		          width={width}>
 			{({ columnIndex, rowIndex, style })=>
-				<PhotoItem index={getItemIndex(columnIndex, rowIndex, colCount)} style={style}/>}
+				<PhotoItem index={getItemIndex(columnIndex, rowIndex, colCount)}
+				           style={style}/>}
 		</Grid>
 	}
 
@@ -56,13 +59,9 @@ class PhotosGrid extends Component {
 
 				{this.renderFetchStatus(fetchStatus)}
 
-				{!photos.length ? <LoadingIndicator/> : this.renderItems()}
-
-				{/*{photos.map((pId) => (*/}
-					{/*<PhotoItem*/}
-						{/*key={pId}*/}
-						{/*id={pId}/>*/}
-				{/*))}*/}
+				{!photos.length ?
+					<LoadingIndicator /> :
+					this.renderItems()}
 			</div>
 		);
 	}
