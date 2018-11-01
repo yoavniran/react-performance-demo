@@ -33,54 +33,55 @@ const PhotoItem = (props) => {
 
 	return (
 		props.id ?
-		<article
-			className={cx(styles.container, "pr pointer", {
-				[`${styles.horizontal} df center `]: horizontal,
-				"dib": !horizontal
-			})}
-			onClick={(e) => {
-				if (!horizontal) {
-					toggleSelected(e, props);
-				}
-				else {
-					setExposed(props);
-				}
-			}}>
+			<article
+				className={cx(styles.container, "pr pointer", {
+					[`${styles.horizontal} df center `]: horizontal,
+					"dib": !horizontal
+				})}
+				onClick={(e) => {
+					if (!horizontal) {
+						toggleSelected(e, props);
+					}
+					else {
+						setExposed(props);
+					}
+				}}>
 
-			<Image className={cx(styles.image, {[styles["hor-image"]]: horizontal})}
-			       cloudName={CLOUD}
-			       publicId={id}
-			       quality="auto"
-			       fetchFormat="auto"
-			       height={horizontal ? "240" : "720"}
-			       width={horizontal ? "240" : "720"} crop="scale"/>
+				<Image className={cx(styles.image, {[styles["hor-image"]]: horizontal})}
+				       cloudName={CLOUD}
+				       publicId={id}
+				       quality="auto"
+				       fetchFormat="auto"
+				       height={horizontal ? "240" : "720"}
+				       width={horizontal ? "240" : "720"} crop="scale"/>
 
-			<div className={cx(styles.info, "df just-between", {
-				[`${styles["info-hor"]} `]: horizontal,
-			})}>
-				<span className={cx(styles.name, "dib")} title={filename}>{filename}</span>
-				<span className={cx(styles.dims, "dib")}>{`${width}x${height}`}</span>
-			</div>
+				<div className={cx(styles.info, "df just-between", {
+					[`${styles["info-hor"]} `]: horizontal,
+				})}>
+					<span className={cx(styles.name, "dib")} title={filename}>{filename}</span>
+					<span className={cx(styles.dims, "dib")}>{`${width}x${height}`}</span>
+				</div>
 
-			{!horizontal ? <span className={cx(styles["actions-bg"], "pabs")}></span> : null}
+				{!horizontal ? <span className={cx(styles["actions-bg"], "pabs")}></span> : null}
 
-			{price ? <div className={cx(styles.price, {
-				"pabs": !horizontal
-			})}>${price}</div> : null}
+				{price ? <div className={cx(styles.price, {
+					"pabs": !horizontal
+				})}>${price}</div> : null}
 
-			<div className={cx(styles.actions, "df center", {
-				"pabs": !horizontal,
-				[`${styles["actions-hor"]}`]: horizontal
-			})}>
-				{selected ? <Svg path={icons.check}
-				                 className={cx(styles.check)} size="xl" title="un-select"
-				                 fill="#6bd6ef" onClick={(e) => toggleSelected(e, props)}/> : null}
-				<Svg className={cx(styles.action)}
-				     title="delete"
-				     path={icons.delete} size="xl" fill="#ffffff"
-				     onClick={(e) => deletePhoto(e, props)}/>
-			</div>
-		</article> : null
+				<div className={cx(styles.actions, "df center", {
+					"pabs": !horizontal,
+					[`${styles["actions-hor"]}`]: horizontal
+				})}>
+					{selected ? <Svg path={icons.check}
+					                 className={cx(styles.check)} size="xl" title="un-select"
+					                 fill="#6bd6ef"
+					                 onClick={(e) => toggleSelected(e, props)}/> : null}
+					<Svg className={cx(styles.action)}
+					     title="delete"
+					     path={icons.delete} size="xl" fill="#ffffff"
+					     onClick={(e) => deletePhoto(e, props)}/>
+				</div>
+			</article> : null
 	);
 };
 
@@ -88,18 +89,19 @@ const getMapState = () => { //using the factory pattern
 	const photoSelector = getPhotoByIdSelector();
 
 	return (state, props) => { //return function to react-redux' mapstate
+		if (!props.id) { //received index instead of id
+			const photo = state.photos[props.index];
 
-		if (!props.id) {
-			if (state.photos[props.index]) {
-				props = {id: state.photos[props.index].public_id};
+			if (photo) {
+				props = {photo, id: photo.public_id};
 			}
 		}
 
-		return {...photoSelector(state, props)};
+		return props.id ? {...photoSelector(state, props)} : {};
 	};
 };
 
 export default connect(
 	getMapState,
 	bindActions,
-)(RenderCounter(PhotoItem, (props)=>({style: props.style})));
+)(RenderCounter(PhotoItem, (props) => ({style: {...props.style, margin: 5}})));

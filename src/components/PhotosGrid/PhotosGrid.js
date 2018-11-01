@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {createRef, Component} from "react";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {FixedSizeGrid as Grid} from "react-window";
@@ -22,7 +22,17 @@ class PhotosGrid extends Component {
 		if (!this.props.photos.length && this.props.fetchStatus === FETCH_STATUSES.NONE) {
 			this.props[TYPES.FETCH_PHOTOS]();
 		}
+		else if (this.props.scrollTop && this.gridRef.current) {
+			this.gridRef.current.scrollTo({scrollTop: this.props.scrollTop});
+		}
 	}
+
+	componentWillUnmount() {
+		this.props.reportLastScrollTop(this.gridScrollTop);
+	}
+
+	gridRef = createRef();
+	gridScrollTop = 0;
 
 	renderFetchStatus(fetchStatus) {
 		return (fetchStatus !== FETCH_STATUSES.NONE) ?
@@ -31,21 +41,24 @@ class PhotosGrid extends Component {
 			</div> : null;
 	}
 
-	renderItems(){
+	renderItems() {
 		const {height, width, photos} = this.props;
 
 		const colCount = Math.floor(width / 250),
 			rowCount = photos.length / colCount;
 
 		return <Grid
-			initialScrollOffset={-260}
-				columnCount={colCount}
-		          columnWidth={250}
-		          height={height}
-		          rowCount={(rowCount+1)}
-		          rowHeight={250}
-		          width={width}>
-			{({ columnIndex, rowIndex, style })=>
+			ref={this.gridRef}
+			columnCount={colCount}
+			columnWidth={250}
+			height={height}
+			rowCount={(rowCount + 1)}
+			rowHeight={270}
+			width={width}
+			onScroll={({scrollTop}) => {
+				this.gridScrollTop = scrollTop;
+			}}>
+			{({columnIndex, rowIndex, style}) =>
 				<PhotoItem index={getItemIndex(columnIndex, rowIndex, colCount)}
 				           style={style}/>}
 		</Grid>
@@ -60,7 +73,7 @@ class PhotosGrid extends Component {
 				{this.renderFetchStatus(fetchStatus)}
 
 				{!photos.length ?
-					<LoadingIndicator /> :
+					<LoadingIndicator/> :
 					this.renderItems()}
 			</div>
 		);

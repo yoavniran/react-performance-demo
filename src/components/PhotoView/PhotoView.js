@@ -1,12 +1,13 @@
 import React, {Fragment} from "react";
-import cx from "classnames";
 import {connect} from "react-redux";
+import cx from "classnames";
 import {Image} from "cloudinary-react";
 import {CLOUD} from "../../consts";
+import RenderCounter from "../RenderCounter/RenderCounter";
 import {selectExposedPhoto} from "./PhotoView.selectors";
 
 import styles from "./PhotoView.module.scss";
-import RenderCounter from "../RenderCounter/RenderCounter";
+
 
 const PhotoView = (props) => (
 	<section className={cx(styles.container, "w-100", {
@@ -15,7 +16,13 @@ const PhotoView = (props) => (
 		{props.photo ?
 			<Fragment>
 				<Image className={cx(styles.image)}
-				       cloudName={CLOUD} publicId={props.photo.id} responsive={true}/>
+				       cloudName={CLOUD} publicId={props.photo.id}
+				       quality="auto"
+				       fetchFormat="auto"
+				       crop="limit"
+				       height="1600">
+				</Image>
+
 				<span className={cx(styles.price, "pabs")}>
 					${props.photo.price}
 				</span>

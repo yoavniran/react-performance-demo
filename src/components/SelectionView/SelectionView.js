@@ -1,7 +1,9 @@
 import React from "react";
+import {connect} from "react-redux";
 import cx from "classnames";
 import AutoSizer from "react-virtualized-auto-sizer";
-import {VIEW_STATES} from "../../consts";
+import {TYPES, VIEW_STATES} from "../../consts";
+import boundActions from "../../actions";
 import Header from "../Header/Header";
 import PhotosGrid from "../PhotosGrid/PhotosGrid";
 import PhotosList from "../PhotosList/PhotosList";
@@ -9,10 +11,16 @@ import PhotosList from "../PhotosList/PhotosList";
 import styles from "./SelectionView.module.scss";
 import RenderCounter from "../RenderCounter/RenderCounter";
 
-const renderGrid = () => (
+//todo: need to wrap PhotosList with Autosizer + react-window's FixedSizeList
+
+const renderGrid = (props) => (
 	<AutoSizer>
-		{({height, width})=>
-			<PhotosGrid height={height} width={width} />
+		{({height, width}) =>
+			<PhotosGrid height={height} width={width}
+			            scrollTop={props.gridScrollTop}
+			            reportLastScrollTop={(scrollTop) => {
+				            props[TYPES.SET_GRID_SCROLLTOP]({scrollTop});
+			            }}/>
 		}
 	</AutoSizer>
 );
@@ -28,7 +36,7 @@ const SelectionView = (props) => {
 			<Header viewState={props.viewState}/>
 
 			<section className={cx(styles.section, "of-auto h-100")}>
-				{isExpanded ? renderGrid() : <PhotosList/>}
+				{isExpanded ? renderGrid(props) : <PhotosList/>}
 			</section>
 		</div>
 	);
@@ -41,4 +49,9 @@ const computeProps = (props) => ({
 	}
 });
 
-export default RenderCounter(SelectionView, computeProps);
+export default connect(
+	(state)=>({
+		gridScrollTop: state.gridScrollTop
+	}),
+	boundActions
+)(RenderCounter(SelectionView, computeProps));

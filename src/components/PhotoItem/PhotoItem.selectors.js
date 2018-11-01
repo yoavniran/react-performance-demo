@@ -2,8 +2,9 @@ import {createSelector} from "reselect";
 import {takePhotoProps} from "../../selectors";
 
 const getPhoto = (state, props) => {
-	return state.photos
-		.find((p) => p.public_id === props.id);
+	return props.photo ||
+		state.photos
+			.find((p) => p.public_id === props.id);
 };
 
 const selectIsSelectedById = (state, props) =>
@@ -18,7 +19,7 @@ export const getPhotoByIdSelector = () =>
 		(photo, selected) => {
 
 			let i = 0;
-			while (i < 1000000){
+			while (i < 1000000) {
 				i++
 			}
 

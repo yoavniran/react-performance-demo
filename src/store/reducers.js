@@ -13,6 +13,8 @@ const initialState = Immutable({
 	selected: [],
 
 	exposedPhoto: null,
+
+	gridScrollTop: 0,
 });
 
 const getPhotoIndex = (photos, id) =>
@@ -106,4 +108,7 @@ export default createReducer(initialState, {
 
 		return state.set("photos", newPhotos);
 	},
+
+	[TYPES.SET_GRID_SCROLLTOP]: (state, {payload}) =>
+		state.set("gridScrollTop", payload.scrollTop),
 });
