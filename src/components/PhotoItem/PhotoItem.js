@@ -86,14 +86,16 @@ const PhotoItem = (props) => {
 	);
 };
 
-export default connect(
-	(state, props) => {
-		const photo = state.photos
-			.find((p) => p.public_id === props.id);
+const photoItemSelector = (state, props) => {
+	const photo = state.photos
+		.find((p) => p.public_id === props.id);
 
-		return {
-			item: takePhotoProps(photo),
-		};
-	},
+	return {
+		item: takePhotoProps(photo),
+	};
+};
+
+export default connect(
+	photoItemSelector,
 	bindActions,
 )(RenderCounter(PhotoItem));
