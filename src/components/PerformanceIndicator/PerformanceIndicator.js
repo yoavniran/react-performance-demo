@@ -1,4 +1,4 @@
-import React, {Component, createRef} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import cx from "classnames";
 
 import styles from "./PerformanceIndicator.module.scss";
@@ -21,7 +21,7 @@ const startMeasure = (callback) => {
 		performance.mark("mySetTimeout-start"); //start a new mark
 	};
 
-	window.__perfHandler = setInterval(doMeasure, tick);
+	window.__perfHandler = setInterval(doMeasure, tick); //perfHandler isnt componentized !!!!!
 };
 
 const getTickColor = (duration) =>
@@ -30,41 +30,40 @@ const getTickColor = (duration) =>
 
 const stateInit = Array(5);
 
-class PerformanceIndicator extends Component {
 
-	fillersRefs = Array.apply(null, stateInit).map(createRef);
+const PerformanceIndicatorWithHooks = (props) => {
+	const fillersRefs = stateInit.fill(null).map(useRef);
 
-	state = {
-		ticks: Array.apply(null, stateInit).map(() => 1),
-	};
+	const [ticks, setTicks] = useState(
+		Array.apply(null, stateInit).map(() => 1)
+	);
 
-	componentDidMount() {
+	useEffect(() => {
 		startMeasure((duration) => {
 			duration = Math.min(Math.max(5, duration), 100);
-			const ticks = this.state.ticks;
 
 			ticks.unshift(duration); //add the latest
-			this.setState({ticks: ticks.slice(0, 5)}); //keep the last 5
+			setTicks(ticks.slice(0, 5));
 		});
-	}
 
-	render() {
-		const ticks = this.state.ticks;
+		return () => {
+			clearInterval(window.__perfHandler);
+		};
+	}, []);
 
-		return (
-			<div className={cx(styles.container, "pr", this.props.className)}>
-				{this.fillersRefs.map((r, i) =>
-					<div key={i}
-					     className={cx(styles.filler, "pabs")} ref={r}
-					     style={{
-						     left: `${i * 10}%`,
-						     height: `${ticks[i]}%`,
-						     background: getTickColor(ticks[i])
-					     }}>
-					</div>)}
-			</div>
-		);
-	}
-}
+	return (
+		<div className={cx(styles.container, "pr", props.className)}>
+			{fillersRefs.map((r, i) =>
+				<div key={i}
+				     className={cx(styles.filler, "pabs")} ref={r}
+				     style={{
+					     left: `${i * 10}%`,
+					     height: `${ticks[i]}%`,
+					     background: getTickColor(ticks[i])
+				     }}>
+				</div>)}
+		</div>
+	);
+};
 
-export default PerformanceIndicator;
+export default PerformanceIndicatorWithHooks;
