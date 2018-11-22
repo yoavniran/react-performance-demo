@@ -35,12 +35,12 @@ photos from Cloudinary based on a specified tag.
 
 You pass these as environment params when starting the server code like so: 
 
-> CLD_KEY="<key>" CLD_SECRET="<secret>" CLD_TAG="<tag>" DEBUG="smocker" node server.js
+> CLD_KEY="[key]" CLD_SECRET="[secret]" CLD_TAG="[tag]" DEBUG="smocker" node server.js
 
 
-* Replace <key> with your API Key
-* Replace <secret> with your API Secret
-* Replace <tag> with a tag you used on your photos
+* Replace '[key]' with your API Key
+* Replace '[secret]' with your API Secret
+* Replace '[tag]' with a tag you used on your photos
 
 The first two parameters you can get from your [account's dashboard](https://cloudinary.com/console) 
 
