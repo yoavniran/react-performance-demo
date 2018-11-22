@@ -11,6 +11,8 @@ const initialState = Immutable({
 	nextCursor: null,
 
 	exposedPhoto: null,
+
+	bigPerfIndicator: false,
 });
 
 const getPhotoIndex = (photos, id) =>
@@ -93,4 +95,7 @@ export default createReducer(initialState, {
 
 		return state.set("photos", newPhotos);
 	},
+
+	[TYPES.TOGGLE_BIG_PERF_INDICATOR]: (state) =>
+		state.set("bigPerfIndicator", !state.bigPerfIndicator),
 });
