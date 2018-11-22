@@ -53,24 +53,25 @@ const getTickColor = (duration) =>
 
 const stateInit = Array(5);
 
-
 const PerformanceIndicatorWithHooks = (props) => {
 	const fillersRefs = stateInit.fill(null).map(useRef);
+	const unregisterCallback = useRef(null);
 
 	const [ticks, setTicks] = useState(
 		Array.apply(null, stateInit).map(() => 1)
 	);
 
 	useEffect(() => {
-		startMeasure((duration) => {
+		unregisterCallback.current = registerCallback((duration) => {
 			duration = Math.min(Math.max(5, duration), 100);
-
 			ticks.unshift(duration); //add the latest
 			setTicks(ticks.slice(0, 5));
 		});
 
 		return () => {
-			clearInterval(window.__perfHandler);
+			if (unregisterCallback.current){
+				unregisterCallback.current();
+			}
 		};
 	}, []);
 
@@ -80,7 +81,7 @@ const PerformanceIndicatorWithHooks = (props) => {
 				<div key={i}
 				     className={cx(styles.filler, "pabs")} ref={r}
 				     style={{
-					     left: `${i * 10}%`,
+					     left: `${i * 20}%`,
 					     height: `${ticks[i]}%`,
 					     background: getTickColor(ticks[i])
 				     }}>
