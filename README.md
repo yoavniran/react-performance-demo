@@ -2,6 +2,8 @@ This code was used for my presentation @ React-Next (Nov) 2018
 
 [Talk on youtube](https://www.youtube.com/watch?v=O6pLZK3R2II)
 
+[![Talk](https://res.cloudinary.com/yoav-cloud/image/upload/q_auto,f_auto/v1542890438/Screen_Shot_2018-11-22_at_14.39.01_o7lowv.png)](https://www.youtube.com/watch?v=O6pLZK3R2II)
+
 [Slides on SlideShare](https://www.slideshare.net/yoavniran/react-responsively-render-responsibly) 
 
 
