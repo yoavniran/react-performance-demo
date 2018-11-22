@@ -5,7 +5,9 @@ import styles from "./PerformanceIndicator.module.scss";
 
 const tick = 100;
 
-const startMeasure = (callback) => {
+const measureCallbacks = [];
+
+const startMeasure = () => {
 	performance.mark("mySetTimeout-start");
 
 	const doMeasure = () => {
@@ -14,14 +16,35 @@ const startMeasure = (callback) => {
 
 		const measure = performance.getEntriesByName("mySetTimeout")[0];
 
-		callback((measure.duration - tick));
+		measureCallbacks.forEach((cb)=>cb((measure.duration - tick)));
 
 		performance.clearMarks();
 		performance.clearMeasures();
 		performance.mark("mySetTimeout-start"); //start a new mark
 	};
 
-	window.__perfHandler = setInterval(doMeasure, tick); //perfHandler isnt componentized !!!!!
+	window.__perfHandler = setInterval(doMeasure, tick);
+};
+
+const registerCallback = (fn) => {
+
+	measureCallbacks.push(fn);
+
+	if (!window.__perfHandler){
+		startMeasure();
+	}
+
+	return () => {
+		const index = measureCallbacks.indexOf(fn);
+
+		if (~index){
+			measureCallbacks.splice(index, 1);
+		}
+
+		if (!measureCallbacks.length && window.__perfHandler){
+			clearInterval(window.__perfHandler);
+		}
+	}
 };
 
 const getTickColor = (duration) =>
