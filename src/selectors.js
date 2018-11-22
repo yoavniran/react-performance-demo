@@ -12,7 +12,11 @@ const takePhotoProps = (photo) =>({
 const selectViewState = (state) =>
 	state.viewState;
 
+const selectBigPerfIndicator = (state) =>
+	state.bigPerfIndicator;
+
 export {
 	takePhotoProps,
 	selectViewState,
+	selectBigPerfIndicator,
 }
