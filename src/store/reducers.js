@@ -15,6 +15,8 @@ const initialState = Immutable({
 	exposedPhoto: null,
 
 	gridScrollTop: 0,
+
+	bigPerfIndicator: false,
 });
 
 const getPhotoIndex = (photos, id) =>
@@ -111,4 +113,7 @@ export default createReducer(initialState, {
 
 	[TYPES.SET_GRID_SCROLLTOP]: (state, {payload}) =>
 		state.set("gridScrollTop", payload.scrollTop),
+
+	[TYPES.TOGGLE_BIG_PERF_INDICATOR]: (state) =>
+		state.set("bigPerfIndicator", !state.bigPerfIndicator),
 });
