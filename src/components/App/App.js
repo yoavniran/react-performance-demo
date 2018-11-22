@@ -1,8 +1,9 @@
 import React  from "react";
 import cx from "classnames";
 import {connect} from "react-redux";
-import {VIEW_STATES} from "../../consts";
+import {TYPES, VIEW_STATES} from "../../consts";
 import {selectBigPerfIndicator, selectViewState} from "../../selectors";
+import boundActions from "../../actions";
 import SelectionView from "../SelectionView/SelectionView";
 import RenderCounter from "../RenderCounter/RenderCounter";
 import PhotoView from "../PhotoView/PhotoView";
@@ -21,7 +22,10 @@ const App = (props) => (
 		<Footer/>
 
 		{props.bigIndicator ?
-			<div className={cx(styles["perf-container"])}>
+			<div className={cx(styles["perf-container"])}
+			onClick={() => {
+				props[TYPES.TOGGLE_BIG_PERF_INDICATOR]();
+			}}>
 				<PerformanceIndicator className={styles.perf}/>
 			</div>
 			: null}
@@ -33,5 +37,5 @@ export default connect(
 		viewState: selectViewState(state),
 		bigIndicator: selectBigPerfIndicator(state),
 	}),
-	null
+	boundActions
 )(RenderCounter(App));
