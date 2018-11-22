@@ -1,5 +1,8 @@
 import React from "react";
+import {connect} from "react-redux";
 import cx from "classnames";
+import {TYPES} from "../../consts";
+import boundActions from "../../actions";
 import PerformanceIndicator from "../PerformanceIndicator/PerformanceIndicator";
 
 import styles from "./Footer.module.scss";
@@ -24,9 +27,13 @@ const toggleParam = (param) => {
 			.join("&");
 };
 
-const Footer = () => (
+const Footer = (props) => (
 	<div className={cx(styles.container, "w-100 df center")}>
-		{STATE[PARAMS.PERF] ? <PerformanceIndicator className={styles.perf}/> : null}
+		{STATE[PARAMS.PERF] ? <div className="h-100 pointer" onClick={() => {
+			props[TYPES.TOGGLE_BIG_PERF_INDICATOR]();
+		}}>
+			<PerformanceIndicator className={styles.perf}/>
+		</div> : null}
 
 		<span className={cx(styles.button, "pointer", {[styles.enabled]: STATE[PARAMS.PERF]})}
 		      onClick={() => toggleParam(PARAMS.PERF)}>
@@ -40,4 +47,7 @@ const Footer = () => (
 	</div>
 );
 
-export default Footer;
+export default connect(
+	null,
+	boundActions,
+)(Footer);
